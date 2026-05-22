@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SmoothScrollProvider from './components/SmoothScroll'
 import Navigation from './components/Navigation'
-import Footer from './components/Footer'
+import { CinematicFooter } from './components/ui/motion-footer'
 import CursorGlow from './components/CursorGlow'
 import FilmGrain from './components/FilmGrain'
 import CinematicPreloader from './components/CinematicPreloader'
@@ -20,7 +20,6 @@ function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
-    // Small delay to ensure smooth scroll is ready
     setTimeout(() => {
       ScrollTrigger.refresh()
     }, 100)
@@ -30,27 +29,22 @@ function ScrollToTop() {
 
 function App() {
   const [preloaderDone, setPreloaderDone] = useState(false)
-
   const handlePreloaderComplete = useCallback(() => {
     setPreloaderDone(true)
   }, [])
 
   return (
     <SmoothScrollProvider>
-      {/* Cinematic Preloader */}
       {!preloaderDone && (
         <CinematicPreloader onComplete={handlePreloaderComplete} />
       )}
-
-      {/* Film grain overlay */}
       <FilmGrain />
-
-      {/* Custom cursor glow */}
       <CursorGlow />
 
       <div className="min-h-screen text-[#F0F4F8]" style={{ background: '#060d1a' }}>
         <ScrollToTop />
         <Navigation />
+
         <Routes>
           <Route path="/" element={<Home preloaderDone={preloaderDone} />} />
           <Route path="/services" element={<Services />} />
@@ -58,7 +52,8 @@ function App() {
           <Route path="/training" element={<Training />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Footer />
+
+        <CinematicFooter />
       </div>
     </SmoothScrollProvider>
   )

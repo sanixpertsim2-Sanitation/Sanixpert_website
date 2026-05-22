@@ -23,6 +23,7 @@ import CinematicReveal, { ParallaxLayer } from '../components/CinematicReveal'
 import ParticleNetwork from '../components/ParticleNetwork'
 import TrustedBy from '../components/TrustedBy'
 import FloatingOrbs from '../components/FloatingOrbs'
+import { SparklesCore } from '../components/ui/sparkles'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -78,9 +79,17 @@ function HeroSection({ preloaderDone }: { preloaderDone: boolean }) {
       {/* Dark overlay with depth */}
       <div className="absolute inset-0 z-[1]" style={{ background: 'linear-gradient(to bottom, rgba(6,13,26,0.4) 0%, rgba(6,13,26,0.75) 50%, rgba(6,13,26,0.95) 100%)' }} />
 
-      {/* Particle network overlay */}
-      <div className="absolute inset-0 z-[2] pointer-events-auto">
-        <ParticleNetwork particleCount={60} connectionDistance={120} maxSpeed={0.3} />
+      {/* Sparkles particle overlay */}
+      <div className="absolute inset-0 z-[2] pointer-events-none">
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.5}
+          particleDensity={80}
+          className="w-full h-full"
+          particleColor="#2E8FD4"
+          speed={2}
+        />
       </div>
 
       {/* Vignette */}
