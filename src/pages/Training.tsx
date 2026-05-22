@@ -62,8 +62,26 @@ export default function Training() {
         </div>
       </section>
 
+      {/* Team Video Section */}
+      <section className="w-full bg-rich section-padding relative overflow-hidden">
+        <div className="content-max">
+          <CinematicReveal type="fade-up" duration={1.4}>
+            <div className="relative rounded-2xl overflow-hidden" style={{ boxShadow: '0 40px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(46,143,212,0.1)' }}>
+              <video autoPlay loop muted playsInline className="w-full h-[350px] md:h-[450px] object-cover" poster="/images/about-team.jpg">
+                <source src="/videos/hero-team-professional.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(4,8,15,0.2) 0%, rgba(4,8,15,0.5) 50%, rgba(4,8,15,0.8) 100%)' }} />
+              <div className="absolute bottom-8 left-8 right-8">
+                <p className="caption-style mb-2">Our Professionals</p>
+                <p className="text-xl md:text-2xl font-light text-[#F0F4F8]">Every team member is continuously trained and certified</p>
+              </div>
+            </div>
+          </CinematicReveal>
+        </div>
+      </section>
+
       {/* Training Programs */}
-      <section className="w-full bg-[#0A1628] section-padding">
+      <section className="w-full bg-rich-alt section-padding">
         <div className="content-max">
           <div className="text-center mb-16">
             <CinematicReveal type="blur-focus">
