@@ -48,7 +48,7 @@ function App() {
       {/* Custom cursor glow */}
       <CursorGlow />
 
-      <div className="min-h-screen bg-[#0A1628] text-[#F0F4F8]">
+      <div className="min-h-screen text-[#F0F4F8]" style={{ background: '#060d1a' }}>
         <ScrollToTop />
         <Navigation />
         <Routes>
