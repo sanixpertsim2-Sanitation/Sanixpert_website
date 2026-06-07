@@ -741,3 +741,592 @@ input[type="radio"] {
 .text-primary { color: var(--color-primary); }
 .text-muted { color: var(--color-text-muted); }
 .text-danger { color: var(--color-danger); }
+
+/* ═══════════════════════════════════════════════
+   Premium CSS Classes — Control, PreClean, PostClean Pages
+   ═══════════════════════════════════════════════ */
+
+/* ── Control Hub Page ── */
+.ctrl-top {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ctrl-top .brand {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.ctrl-top h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--color-text);
+}
+
+.ctrl-top .shift {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Progress Ring */
+.ring-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-track {
+  fill: none;
+  stroke: #e8e8e8;
+  stroke-width: 10;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: url(#ringGrad);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.ring-txt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.ring-txt .pct {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+  line-height: 1;
+}
+
+.ring-txt .lbl {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+/* ── Status Badges (Premium) ── */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.b-idle {
+  background: #95a5a6;
+  color: #fff;
+}
+
+.b-pc {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+.b-cip {
+  background: var(--color-info);
+  color: #fff;
+}
+
+.b-blk {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.b-rel {
+  background: var(--color-success);
+  color: #fff;
+}
+
+/* ── Control Actions ── */
+.ctrl-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.act-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  color: var(--color-text);
+  min-height: 120px;
+}
+
+.act-btn:hover:not(:disabled) {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.act-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.act-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.act-txt {
+  text-align: center;
+}
+
+.act-txt .t {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.act-txt .d {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+.act-arr {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Back Button ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 8px;
+}
+
+.back-btn:hover {
+  color: var(--color-primary);
+}
+
+/* ── Glass Cards ── */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.glass:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ── Checklist Top ── */
+.chk-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.chk-top h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
+
+/* ── Progress Bar ── */
+.pbar {
+  width: 100%;
+  height: 10px;
+  background: #e8e8e8;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.pfill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+
+.ptxt {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* ── Employee Input ── */
+.emp-in {
+  margin-bottom: 16px;
+}
+
+.emp-in label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.emp-in input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fff;
+  transition: var(--transition);
+}
+
+.emp-in input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 95, 42, 0.1);
+}
+
+/* ── Count Grid ── */
+.counts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.counts label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.counts input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fff;
+  transition: var(--transition);
+}
+
+.counts input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 95, 42, 0.1);
+}
+
+/* ── Checklist Item ── */
+.chk-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--color-text);
+}
+
+.chk-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+/* ── Option Buttons ── */
+.opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  color: var(--color-text);
+  transition: var(--transition);
+  flex: 1;
+  min-height: 44px;
+}
+
+.opt:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.opt.selected {
+  background: var(--color-primary);
+  color: #fff;
+  border-style: solid;
+  border-color: var(--color-primary);
+}
+
+.opt-r {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 2px dashed var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  color: var(--color-danger);
+  transition: var(--transition);
+  flex: 1;
+  min-height: 44px;
+}
+
+.opt-r:hover {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.opt-r.selected {
+  background: var(--color-danger);
+  color: #fff;
+  border-style: solid;
+}
+
+.opt-y {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 2px dashed #95a5a6;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  color: #7f8c8d;
+  transition: var(--transition);
+  flex: 1;
+  min-height: 44px;
+}
+
+.opt-y:hover {
+  background: #95a5a6;
+  color: #fff;
+}
+
+.opt-y.selected {
+  background: #95a5a6;
+  color: #fff;
+  border-style: solid;
+}
+
+/* ── Notes Textarea ── */
+.notes {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fff;
+  resize: vertical;
+  min-height: 80px;
+  margin-top: 8px;
+  transition: var(--transition);
+}
+
+.notes:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 95, 42, 0.1);
+}
+
+/* ── Button Navigation ── */
+.btn-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-nav .btn {
+  flex: 1;
+}
+
+/* ── Damage Button ── */
+.dmg-btn {
+  background: var(--color-danger);
+  color: #fff;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.dmg-btn:hover {
+  background: var(--color-danger-dark);
+}
+
+/* ── Modal / Overlay ── */
+.m-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--color-text);
+}
+
+.m-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+}
+
+.m-close:hover {
+  color: var(--color-text);
+}
+
+.m-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.m-actions .btn {
+  flex: 1;
+}
+
+/* ── Photo Upload ── */
+.p-upload {
+  display: block;
+  cursor: pointer;
+}
+
+.p-drop {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+  background: #fafafa;
+}
+
+.p-drop:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.p-drop img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Option Row ── */
+.opt-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ── */
+@media (min-width: 768px) {
+  .ctrl-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .counts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
