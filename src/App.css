@@ -1330,3 +1330,61 @@ input[type="radio"] {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ── Button Variants (Premium) ── */
+.btn-g {
+  background: var(--color-success);
+  color: #fff;
+}
+
+.btn-g:hover:not(:disabled) {
+  background: #229954;
+}
+
+.btn-d {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.btn-d:hover:not(:disabled) {
+  background: var(--color-danger-dark);
+}
+
+.btn-w {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+.btn-w:hover:not(:disabled) {
+  background: var(--color-secondary-dark);
+}
+
+.btn-b {
+  background: var(--color-info);
+  color: #fff;
+}
+
+.btn-b:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.btn-pur {
+  background: #8e44ad;
+  color: #fff;
+}
+
+.btn-pur:hover:not(:disabled) {
+  background: #7d3c98;
+}
+
+.btn-o {
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 10px 22px;
+}
+
+.btn-o:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: #fff;
+}
