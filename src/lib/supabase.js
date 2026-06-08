@@ -5,118 +5,205 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Auth helpers
-export const getCurrentUser = async () => {
-  const { data: { user } } = await supabase.auth.getUser()
-  return user
-}
+// ── Photo Upload ──
 
-export const getProfile = async (userId) => {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single()
-  if (error) throw error
-  return data
-}
-
-export const signIn = (email, password) => supabase.auth.signInWithPassword({ email, password })
-export const signUp = (email, password) => supabase.auth.signUp({ email, password })
-export const signOut = () => supabase.auth.signOut()
-
-// Database helpers
-export const getLines = () => supabase.from('production_lines').select('*, facilities(name)').order('name')
-
-// getChecklist by lineId (fetches all areas for the line)
-export const getChecklist = (lineId, phase) =>
-  supabase
-    .from('checklist_templates')
-    .select('*, areas!inner(line_id)')
-    .eq('areas.line_id', lineId)
-    .eq('phase', phase)
-    .order('step_number', { ascending: true })
-
-// Upload photo to Supabase Storage
-export const uploadPhoto = async (file) => {
-  if (!file) return null
-  const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`
+export const uploadPhoto = async (file, bucket = 'verification-photos') => {
+  const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${file.name.split('.').pop()}`
   const { data, error } = await supabase.storage
-    .from('verification-photos')
-    .upload(fileName, file, { contentType: 'image/jpeg' })
+    .from(bucket)
+    .upload(fileName, file, { contentType: file.type })
   if (error) throw error
-  const { data: { publicUrl } } = supabase.storage.from('verification-photos').getPublicUrl(data.path)
+  const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(fileName)
   return publicUrl
 }
 
-// Insert pre-clean log (batch insert checklist responses)
-export const insertPreCleanLog = (responses) =>
-  supabase.from('checklist_responses').insert(responses)
+// ── Areas (called "lines" in the UI) ──
 
-// Insert post-clean log (batch insert checklist responses)
-export const insertPostCleanLog = (responses) =>
-  supabase.from('checklist_responses').insert(responses)
+export const getLines = async () => {
+  const { data, error } = await supabase
+    .from('areas')
+    .select('*')
+    .order('sort_order')
+  if (error) throw error
+  return data || []
+}
 
-// Insert damage report
-export const insertDamageReport = (report) =>
-  supabase.from('damage_reports').insert(report)
-export const getAreas = (lineId) => supabase.from('areas').select('*').eq('line_id', lineId).order('name')
-export const getAssignments = (lineId, shift) => supabase.from('assignments').select('*, profiles(full_name)').eq('line_id', lineId).eq('shift', shift)
-export const createAssignment = (assignment) => supabase.from('assignments').insert(assignment)
-export const updateAssignment = (id, update) => supabase.from('assignments').update(update).eq('id', id)
-export const submitChecklistResponse = (response) => supabase.from('checklist_responses').insert(response)
-export const createDamageReport = (report) => supabase.from('damage_reports').insert(report)
-export const getDamageReports = (lineId) => supabase.from('damage_reports').select('*, profiles(full_name)').eq('line_id', lineId).order('created_at', { ascending: false })
-export const resolveDamageReport = (id) => supabase.from('damage_reports').update({ status: 'resolved', resolved_at: new Date() }).eq('id', id)
-export const createFinding = (finding) => supabase.from('findings').insert(finding)
-export const getFindings = (lineId) => supabase.from('findings').select('*, profiles(full_name)').eq('line_id', lineId).order('created_at', { ascending: false })
-export const createVerification = (verification) => supabase.from('area_lead_verifications').insert(verification)
-export const logActivity = (log) => supabase.from('activity_logs').insert(log)
-export const getDashboardStats = async (lineId) => {
-  // Get counts for dashboard
-  const [areasRes, assignmentsRes, damageRes, findingsRes] = await Promise.all([
-    supabase.from('areas').select('id, name, status, locked_by, locked_at').eq('line_id', lineId),
-    supabase.from('assignments').select('*').eq('line_id', lineId).eq('date', new Date().toISOString().split('T')[0]),
-    supabase.from('damage_reports').select('id, status').eq('line_id', lineId),
-    supabase.from('findings').select('id, status').eq('line_id', lineId)
+// ── Checklist Templates ──
+
+export const getChecklist = async (areaId, phase) => {
+  const { data, error } = await supabase
+    .from('checklist_templates')
+    .select('*')
+    .eq('area_id', areaId)
+    .eq('phase', phase)
+    .order('step_number')
+  if (error) throw error
+  return data || []
+}
+
+// ── Pre-Cleaning Logs ──
+
+export const insertPreCleanLog = async (log) => {
+  const { data, error } = await supabase
+    .from('pre_cleaning_logs')
+    .insert(log)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getPreCleanLogs = async (lineId) => {
+  const { data, error } = await supabase
+    .from('pre_cleaning_logs')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('completed_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+// ── Post-Cleaning Logs ──
+
+export const insertPostCleanLog = async (log) => {
+  const { data, error } = await supabase
+    .from('post_cleaning_logs')
+    .insert(log)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getPostCleanLogs = async (lineId) => {
+  const { data, error } = await supabase
+    .from('post_cleaning_logs')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('completed_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+// ── Damage Reports ──
+
+export const insertDamageReport = async (report) => {
+  const { data, error } = await supabase
+    .from('damage_reports')
+    .insert(report)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getDamageReports = async (lineId) => {
+  const { data, error } = await supabase
+    .from('damage_reports')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+export const updateDamageReport = async (id, updates) => {
+  const { data, error } = await supabase
+    .from('damage_reports')
+    .update(updates)
+    .eq('id', id)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+// ── Handover Tasks ──
+
+export const insertHandoverTask = async (task) => {
+  const { data, error } = await supabase
+    .from('handover_tasks')
+    .insert(task)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getHandoverTasks = async (lineId) => {
+  const { data, error } = await supabase
+    .from('handover_tasks')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+export const updateHandoverTask = async (id, updates) => {
+  const { data, error } = await supabase
+    .from('handover_tasks')
+    .update(updates)
+    .eq('id', id)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+// ── Area Inspection Logs ──
+
+export const insertInspectionLog = async (log) => {
+  const { data, error } = await supabase
+    .from('area_inspection_logs')
+    .insert(log)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getInspectionLogs = async (lineId) => {
+  const { data, error } = await supabase
+    .from('area_inspection_logs')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('completed_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+// ── Line Release Logs ──
+
+export const insertReleaseLog = async (log) => {
+  const { data, error } = await supabase
+    .from('line_release_logs')
+    .insert(log)
+    .select()
+  if (error) throw error
+  return data?.[0]
+}
+
+export const getReleaseLogs = async (lineId) => {
+  const { data, error } = await supabase
+    .from('line_release_logs')
+    .select('*')
+    .eq('line_id', lineId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data || []
+}
+
+// ── Dashboard Stats ──
+
+export const getDashboardStats = async () => {
+  const [areasRes, preCleanRes, postCleanRes, damageRes, handoverRes, releaseRes] = await Promise.all([
+    supabase.from('areas').select('id, name, side'),
+    supabase.from('pre_cleaning_logs').select('line_id, completed_at'),
+    supabase.from('post_cleaning_logs').select('line_id, completed_at'),
+    supabase.from('damage_reports').select('id, line_id, status'),
+    supabase.from('handover_tasks').select('id, line_id, status'),
+    supabase.from('line_release_logs').select('line_id, created_at')
   ])
   return {
     areas: areasRes.data || [],
-    assignments: assignmentsRes.data || [],
+    preCleanLogs: preCleanRes.data || [],
+    postCleanLogs: postCleanRes.data || [],
     damageReports: damageRes.data || [],
-    findings: findingsRes.data || []
+    handoverTasks: handoverRes.data || [],
+    releaseLogs: releaseRes.data || []
   }
-}
-
-// Handover tasks
-export const getHandoverTasks = (lineId) =>
-  supabase.from('handover_tasks').select('*').eq('line_id', lineId).order('created_at', { ascending: false })
-
-export const updateHandoverTask = (id, update) =>
-  supabase.from('handover_tasks').update(update).eq('id', id)
-
-export const insertHandoverTask = (task) =>
-  supabase.from('handover_tasks').insert(task)
-
-// Generic damage report update
-export const updateDamageReport = (id, update) =>
-  supabase.from('damage_reports').update(update).eq('id', id)
-
-// Inspection log (area lead verification)
-export const insertInspectionLog = (log) =>
-  supabase.from('inspection_logs').insert(log)
-
-// Release log
-export const insertReleaseLog = (log) =>
-  supabase.from('release_logs').insert(log)
-
-// Realtime subscriptions
-export const subscribeToLine = (lineId, callback) => {
-  return supabase
-    .channel(`line-${lineId}`)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'production_lines', filter: `id=eq.${lineId}` }, callback)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'assignments', filter: `line_id=eq.${lineId}` }, callback)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'damage_reports', filter: `line_id=eq.${lineId}` }, callback)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'findings', filter: `line_id=eq.${lineId}` }, callback)
-    .subscribe()
 }
