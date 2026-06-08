@@ -70,10 +70,6 @@
     @apply border-border;
   }
   body {
-    background: linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%);
-    background-attachment: fixed;
-    color: #ffffff;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground;
   }
 }
