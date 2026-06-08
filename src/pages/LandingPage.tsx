@@ -5,7 +5,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-center relative overflow-hidden"
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
       
       {/* Ambient glow */}

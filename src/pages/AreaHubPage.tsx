@@ -22,7 +22,7 @@ export default function AreaHubPage() {
   const goTo = (path: string) => navigate(path);
 
   return (
-    <div className="min-h-[100dvh] px-5 py-6 pb-20" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
+    <div className="min-h-screen px-5 py-6 pb-20" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
       <button onClick={() => navigate('/areas')} className="flex items-center gap-2 text-white/50 text-sm mb-6 hover:text-white transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Areas
       </button>

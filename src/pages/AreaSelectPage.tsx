@@ -19,7 +19,7 @@ export default function AreaSelectPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] px-5 py-6 pb-20" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
+    <div className="min-h-screen px-5 py-6 pb-20" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
       {/* Header */}
       <button onClick={() => navigate('/')} className="flex items-center gap-2 text-white/50 text-sm mb-6 hover:text-white transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back

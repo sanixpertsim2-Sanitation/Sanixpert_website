@@ -40,7 +40,7 @@ export default function ReleasePage() {
   if (!area) return null;
 
   return (
-    <div className="min-h-[100dvh] px-5 py-6 pb-24" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
+    <div className="min-h-screen px-5 py-6 pb-24" style={{ background: 'linear-gradient(180deg, #0a1628 0%, #162544 40%, #1d3566 100%)' }}>
       <div className="flex items-center gap-3 mb-6">
         <button onClick={() => navigate('/hub')} className="text-white/50 hover:text-white transition-colors">
           <ArrowLeft className="w-5 h-5" />

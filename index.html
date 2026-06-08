@@ -4,9 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>G&G Sanitation Digital</title>
+    <style>
+      html, body { margin: 0; padding: 0; min-height: 100vh; background: #0a1628; }
+      #root { min-height: 100vh; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;color:rgba(255,255,255,0.5);font-family:sans-serif;">
+        <p>Loading G&G Sanitation Digital...</p>
+      </div>
+    </div>
+    <script>
+      window.onerror = function(msg, url, line) {
+        document.getElementById('root').innerHTML = '<div style="padding:40px;color:#ff4757;font-family:sans-serif;"><h2>JavaScript Error</h2><pre>' + msg + '<br>Line: ' + line + '</pre></div>';
+        return false;
+      };
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
