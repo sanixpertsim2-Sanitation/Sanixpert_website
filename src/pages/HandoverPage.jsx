@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, AlertTriangle, CheckCircle, ShieldAlert, Wrench, ClipboardList } from 'lucide-react'
 import {
   getHandoverTasks, updateHandoverTask,
   getDamageReports, updateDamageReport, insertHandoverTask,
 } from '../lib/supabase.js'
 
+function getStoredLineId() {
+  try {
+    const stored = sessionStorage.getItem('selectedLine')
+    return stored ? JSON.parse(stored).id : 'macy'
+  } catch { return 'macy' }
+}
+
 /**
  * HandoverPage — Resolve open tasks and damages before verification
- * Route: /line/:lineId/handover
  */
 export default function HandoverPage() {
-  const { lineId } = useParams()
   const navigate = useNavigate()
+  const lineId = getStoredLineId()
 
   const [tasks, setTasks] = useState([])
   const [damages, setDamages] = useState([])

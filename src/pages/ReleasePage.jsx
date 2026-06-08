@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, AlertTriangle, CheckCircle, Lock, Unlock, Send } from 'lucide-react'
 import {
   getHandoverTasks, getDamageReports, insertReleaseLog,
 } from '../lib/supabase.js'
 
+function getStoredLineId() {
+  try {
+    const stored = sessionStorage.getItem('selectedLine')
+    return stored ? JSON.parse(stored).id : 'macy'
+  } catch { return 'macy' }
+}
+
 /**
  * ReleasePage — Final approval to release a production line
- * Route: /line/:lineId/release
  */
 export default function ReleasePage() {
-  const { lineId } = useParams()
   const navigate = useNavigate()
+  const lineId = getStoredLineId()
 
   const [tasks, setTasks] = useState([])
   const [damages, setDamages] = useState([])

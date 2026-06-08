@@ -1,17 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, AlertTriangle, CheckCircle, PenLine, XCircle, ClipboardList, FileText } from 'lucide-react'
 import {
   getDamageReports, insertInspectionLog,
 } from '../lib/supabase.js'
 
+function getStoredLineId() {
+  try {
+    const stored = sessionStorage.getItem('selectedLine')
+    return stored ? JSON.parse(stored).id : 'macy'
+  } catch { return 'macy' }
+}
+
 /**
  * VerifyPage — Area Lead Verification with signature
- * Route: /line/:lineId/verify
  */
 export default function VerifyPage() {
-  const { lineId } = useParams()
   const navigate = useNavigate()
+  const lineId = getStoredLineId()
   const canvasRef = useRef(null)
 
   const [damages, setDamages] = useState([])

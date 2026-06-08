@@ -1,10 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getChecklist, insertPreCleanLog } from '../lib/supabase.js'
 
+function getStoredLineId() {
+  try {
+    const stored = sessionStorage.getItem('selectedLine')
+    return stored ? JSON.parse(stored).id : 'macy'
+  } catch { return 'macy' }
+}
+
 export default function PreCleanPage() {
-  const { lineId } = useParams()
   const navigate = useNavigate()
+  const lineId = getStoredLineId()
 
   const [items, setItems] = useState([])
   const [responses, setResponses] = useState({})
@@ -131,7 +138,7 @@ export default function PreCleanPage() {
       // update state machine
       localStorage.setItem(`line-state-${lineId}`, JSON.stringify('pre_done'))
 
-      navigate(`/control/${lineId}`)
+      navigate('/control')
     } catch (err) {
       console.error('Submit error:', err)
       setError(err.message || 'Failed to submit checklist. Please try again.')
@@ -156,7 +163,7 @@ export default function PreCleanPage() {
     <div className="page">
       {/* ── Top ── */}
       <div className="chk-top">
-        <button className="back-btn" onClick={() => navigate(`/control/${lineId}`)}>
+        <button className="back-btn" onClick={() => navigate('/control')}>
           &#8592; Back
         </button>
         <h1>Pre-Clean Checklist</h1>
@@ -247,7 +254,7 @@ export default function PreCleanPage() {
       <div className="btn-nav">
         <button
           className="btn btn-o"
-          onClick={() => navigate(`/control/${lineId}`)}
+          onClick={() => navigate('/control')}
           disabled={submitting}
         >
           Cancel

@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { getLines } from '../lib/supabase.js'
+import { useNavigate } from 'react-router-dom'
 
 const CIRCUMFERENCE = 408
 
@@ -25,11 +24,21 @@ function detectShift() {
   return 'Morning'
 }
 
-export default function ControlPage() {
-  const { lineId } = useParams()
-  const navigate = useNavigate()
+function getStoredLine() {
+  try {
+    const stored = sessionStorage.getItem('selectedLine')
+    return stored ? JSON.parse(stored) : { id: 'macy', name: 'MACY' }
+  } catch {
+    return { id: 'macy', name: 'MACY' }
+  }
+}
 
-  const [lineName, setLineName] = useState('MACY')
+export default function ControlPage() {
+  const navigate = useNavigate()
+  const line = getStoredLine()
+  const lineId = line.id
+  const lineName = line.name || 'MACY'
+
   const [state, setState] = useState('idle')
   const [loading, setLoading] = useState(true)
 
@@ -46,23 +55,6 @@ export default function ControlPage() {
   useEffect(() => {
     localStorage.setItem(`line-state-${lineId}`, JSON.stringify(state))
   }, [state, lineId])
-
-  /* ── fetch line info ── */
-  useEffect(() => {
-    let cancelled = false
-    const fetchLine = async () => {
-      try {
-        const { data, error } = await getLines()
-        if (error) throw error
-        const line = (data || []).find(l => l.id === lineId || l.id === Number(lineId))
-        if (line && !cancelled) setLineName(line.name || 'MACY')
-      } catch (err) {
-        console.error('Error fetching lines:', err)
-      }
-    }
-    fetchLine()
-    return () => { cancelled = true }
-  }, [lineId])
 
   /* ── progress percent ── */
   const progressPercent = useMemo(() => {
@@ -143,7 +135,7 @@ export default function ControlPage() {
         {/* Pre-Clean */}
         <button
           className="act-btn"
-          onClick={() => navigate(`/pre-clean/${lineId}`)}
+          onClick={() => navigate('/pre-clean')}
           disabled={!canPreClean || isReleased}
         >
           <div className="act-icon" style={{ background: '#f3e8ff', color: '#9333ea' }}>
@@ -159,7 +151,7 @@ export default function ControlPage() {
         {/* Post-Clean */}
         <button
           className="act-btn"
-          onClick={() => navigate(`/post-clean/${lineId}`)}
+          onClick={() => navigate('/post-clean')}
           disabled={!canPostClean || isReleased}
         >
           <div className="act-icon" style={{ background: '#dbeafe', color: '#2563eb' }}>
@@ -175,7 +167,7 @@ export default function ControlPage() {
         {/* Handover */}
         <button
           className="act-btn"
-          onClick={() => navigate(`/handover/${lineId}`)}
+          onClick={() => navigate('/handover')}
           disabled={!canHandover || isReleased}
         >
           <div className="act-icon" style={{ background: '#ffedd5', color: '#ea580c' }}>
@@ -191,7 +183,7 @@ export default function ControlPage() {
         {/* Area Lead Verify */}
         <button
           className="act-btn"
-          onClick={() => navigate(`/verify/${lineId}`)}
+          onClick={() => navigate('/verify')}
           disabled={!canVerify || isReleased}
         >
           <div className="act-icon" style={{ background: '#d1fae5', color: '#16a34a' }}>
@@ -207,7 +199,7 @@ export default function ControlPage() {
         {/* Release Line */}
         <button
           className="act-btn"
-          onClick={() => navigate(`/release/${lineId}`)}
+          onClick={() => navigate('/release')}
           disabled={!canRelease || isReleased}
         >
           <div className="act-icon" style={{ background: '#fef3c7', color: '#d97706' }}>
