@@ -1,45 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
-import './App.css'
-
-// Pages
-import IndexPage from './pages/IndexPage.jsx'
-import LineSelectPage from './pages/LineSelectPage.jsx'
-import ControlPage from './pages/ControlPage.jsx'
-import PreCleanPage from './pages/PreCleanPage.jsx'
-import PostCleanPage from './pages/PostCleanPage.jsx'
-import HandoverPage from './pages/HandoverPage.jsx'
-import VerifyPage from './pages/VerifyPage.jsx'
-import ReleasePage from './pages/ReleasePage.jsx'
-import DashboardPage from './pages/DashboardPage.jsx'
-
-// Layout wrapper
-function Layout({ children }) {
-  return (
-    <div className="app-layout">
-      <main className="main-content">{children}</main>
-    </div>
-  )
-}
-
-/**
- * G&G Sanitation Digital — Audit-Grade Sanitation Control System
- * Router with 9 routes covering the full sanitation workflow:
- * Landing -> Line Select -> Control Hub -> (PreClean | PostClean | Handover | Verify | Release) -> Dashboard
- */
 export default function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/lines" element={<LineSelectPage />} />
-        <Route path="/control" element={<ControlPage />} />
-        <Route path="/pre-clean" element={<PreCleanPage />} />
-        <Route path="/post-clean" element={<PostCleanPage />} />
-        <Route path="/handover" element={<HandoverPage />} />
-        <Route path="/verify" element={<VerifyPage />} />
-        <Route path="/release" element={<ReleasePage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-      </Routes>
-    </Layout>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #0a1628 0%, #1d3566 100%)', color: '#fff', fontFamily: 'sans-serif', padding: '40px' }}>
+      <h1 style={{ fontSize: '32px', marginBottom: '20px' }}>G&G SANITATION DIGITAL</h1>
+      <img src="/macy-cupcake.jpg" alt="MACY" style={{ width: '180px', height: '180px', borderRadius: '50%', marginBottom: '24px' }} />
+      <button style={{ padding: '20px 40px', fontSize: '18px', fontWeight: 'bold', borderRadius: '16px', border: 'none', background: '#fff', color: '#0a1628', cursor: 'pointer' }}>
+        Start Sanitation
+      </button>
+      <p style={{ marginTop: '20px', color: 'rgba(255,255,255,0.5)' }}>v2.0</p>
+    </div>
   )
 }
