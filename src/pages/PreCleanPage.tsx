@@ -177,8 +177,11 @@ export default function PreCleanPage() {
         })}
       </div>
 
+      {/* Spacer for fixed button */}
+      <div className="h-24" />
+
       {/* Submit */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 max-w-lg mx-auto" style={{ background: 'linear-gradient(to top, #0a1628, transparent)' }}>
+      <div className="fixed bottom-0 left-0 right-0 p-4 max-w-lg mx-auto z-50" style={{ background: 'linear-gradient(to top, #0a1628 30%, transparent)' }}>
         <button
           onClick={handleSubmit}
           disabled={submitting}

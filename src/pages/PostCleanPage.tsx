@@ -212,8 +212,11 @@ export default function PostCleanPage() {
         </div>
       )}
 
+      {/* Spacer for fixed button */}
+      <div className="h-24" />
+
       {/* Submit */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 max-w-lg mx-auto" style={{ background: 'linear-gradient(to top, #0a1628, transparent)' }}>
+      <div className="fixed bottom-0 left-0 right-0 p-4 max-w-lg mx-auto z-50" style={{ background: 'linear-gradient(to top, #0a1628 30%, transparent)' }}>
         <button onClick={handleSubmit} disabled={submitting}
           className="w-full py-4 rounded-2xl font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-50"
           style={{ background: 'linear-gradient(135deg, #4facfe, #3d8bfe)', boxShadow: '0 8px 32px rgba(79,172,254,0.3)' }}>
